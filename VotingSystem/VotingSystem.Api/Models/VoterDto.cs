@@ -1,20 +1,20 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using VotingSystem.Api.Validations.ValidationAttributes;
 
-namespace VotingSystem.Api.Entities
+namespace VotingSystem.Api.Models
 {
-    public class Voter
+    public class VoterDto
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.None)]
+        [Required(ErrorMessage = "You should provide a user name.")]
         [MaxLength(50)]
         public string UserName { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "You should provide a name.")]
         [MaxLength(50)]
         public string Name { get; set; }
-
+        
         [MaxLength(50)]
         [Email]
         public string? Email { get; set; }

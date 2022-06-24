@@ -1,6 +1,11 @@
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using VotingSystem.Api.DbContexts;
 using VotingSystem.Api.DbSeed;
+using VotingSystem.Api.Entities;
+using VotingSystem.Api.Logic;
+using VotingSystem.Api.Validations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +19,11 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<VotingSystemContext>(
     dbContextOptions => dbContextOptions.UseSqlite(
         builder.Configuration["ConnectionStrings:CityInfoDBConnectionString"]));
+
+builder.Services.AddScoped<IVoterRepository, VoterRepository>();
+builder.Services.AddScoped < IValidator<Voter>, VoterEntityValidator>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 
