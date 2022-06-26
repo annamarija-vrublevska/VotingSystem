@@ -2,6 +2,7 @@ using FluentValidation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using VotingSystem.Api.BackgroundServices;
 using VotingSystem.Api.DbContexts;
 using VotingSystem.Api.DbSeed;
 using VotingSystem.Api.Entities;
@@ -42,6 +43,9 @@ builder.Services.AddAuthentication("BasicAuthentication")
         ("BasicAuthentication", null);
 
 builder.Services.AddAuthorization();
+
+builder.Services.AddHostedService<ConsumeScopedServiceHostedService>();
+builder.Services.AddScoped<IItemStatusUpdateService, ItemStatusUpdateService>();
 
 var app = builder.Build();
 
