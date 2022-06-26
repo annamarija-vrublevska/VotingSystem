@@ -14,5 +14,6 @@ namespace VotingSystem.Api.Entities
         [ForeignKey("ItemId")]
         public Item? Item { get; set; }
         public long ItemId { get; set; }
+        public DateTime VoteDate { get; set; } = DateTime.Now;
     }
 }

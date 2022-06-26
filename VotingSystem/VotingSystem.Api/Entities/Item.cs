@@ -10,7 +10,7 @@ namespace VotingSystem.Api.Entities
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long Id { get; set; }
         public string Name { get; set; }
-        public long Volume { get; set; }
+        public long Volume { get; set; } = 0;
         [ForeignKey("UserName")]
         public Voter? Owner { get; set; }
         public string UserName { get; set; }

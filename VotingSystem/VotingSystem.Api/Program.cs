@@ -31,7 +31,9 @@ builder.Services.AddDbContext<VotingSystemContext>(
         builder.Configuration["ConnectionStrings:CityInfoDBConnectionString"]));
 
 builder.Services.AddScoped<IVoterRepository, VoterRepository>();
-builder.Services.AddScoped < IValidator<Voter>, VoterEntityValidator>();
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
+builder.Services.AddScoped<IVoteHistoryRepository, VoteHistoryRepository>();
+builder.Services.AddScoped<IValidator<Voter>, VoterEntityValidator>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

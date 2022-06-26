@@ -43,19 +43,29 @@ namespace VotingSystem.Api.Controllers
         public async Task<ActionResult<VoterDto>> Get(string userName)
         {
             var voterEntity = await _voterRepository.GetVoterByUserNameAsync(userName);
+
+            if (voterEntity == null)
+            {
+                return NotFound();
+            }
+
             return Ok(_mapper.Map<VoterDto>(voterEntity));
         }
         
         [HttpPost]
         public async Task<ActionResult> Create(VoterDto voter)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             if (await _voterRepository.VoterExists(voter.UserName))
             {
                 return BadRequest("User name already exists.");
             }
 
             var voterEntity = _mapper.Map<Voter>(voter);
-
             var validationResult = await _validator.ValidateAsync(voterEntity);
 
             if (!validationResult.IsValid)
@@ -87,13 +97,13 @@ namespace VotingSystem.Api.Controllers
             }
 
             var voterEntity = await _voterRepository.GetVoterByUserNameAsync(userName);
+
             if (voterEntity == null)
             {
                 return NotFound();
             }
             
             _mapper.Map(voter, voterEntity);
-
             var validationResult = await _validator.ValidateAsync(voterEntity);
 
             if (!validationResult.IsValid)
@@ -102,7 +112,6 @@ namespace VotingSystem.Api.Controllers
             }
 
             await _voterRepository.SaveChangesAsync();
-
             return Ok();
         }
         
@@ -110,13 +119,14 @@ namespace VotingSystem.Api.Controllers
         public async Task<ActionResult> Delete(string userName)
         {
             var voter = await _voterRepository.GetVoterByUserNameAsync(userName);
+
             if (voter == null)
             {
                 return NotFound();
             }
 
             _voterRepository.DeleteVoter(voter);
-
+            await _voterRepository.SaveChangesAsync();
             return Ok();
         }
     }

@@ -1,4 +1,5 @@
-﻿using VotingSystem.Api.DbContexts;
+﻿using Microsoft.EntityFrameworkCore;
+using VotingSystem.Api.DbContexts;
 using VotingSystem.Api.Entities;
 
 namespace VotingSystem.Api.DbSeed
@@ -11,13 +12,19 @@ namespace VotingSystem.Api.DbSeed
 
             if (context.Items.Any())
             {
-                context.Items.RemoveRange(context.Items);
+                context.Database.ExecuteSqlRawAsync("DELETE FROM [Items]");
                 context.SaveChanges();
             }
 
             if (context.Voters.Any())
             {
-                context.Voters.RemoveRange(context.Voters);
+                context.Database.ExecuteSqlRawAsync("DELETE FROM [Voters]");
+                context.SaveChanges();
+            }
+
+            if (context.VoteHistory.Any())
+            {
+                context.Database.ExecuteSqlRawAsync("DELETE FROM [VoteHistory]");
                 context.SaveChanges();
             }
 
