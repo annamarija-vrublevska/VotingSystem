@@ -1,15 +1,17 @@
 ﻿using AutoMapper;
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using VotingSystem.Api.Entities;
-using VotingSystem.Api.Logic;
 using VotingSystem.Api.Models;
+using VotingSystem.Api.Repositories.Interfaces;
 
 namespace VotingSystem.Api.Controllers
 {
-    [ApiController]
     [Route("api/voters")]
+    [ApiController]
+    [Authorize]
+    
     public class VoterController : ControllerBase
     {
         private readonly IVoterRepository _voterRepository;
@@ -20,7 +22,7 @@ namespace VotingSystem.Api.Controllers
         public VoterController(IVoterRepository voterRepository, 
             IValidator<Voter> validator, 
             IMapper mapper, 
-            ILogger logger)
+            ILogger<VoterController> logger)
         {
             _voterRepository = voterRepository;
             _validator = validator;
@@ -29,6 +31,7 @@ namespace VotingSystem.Api.Controllers
         }
         
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<VoterDto>>> Get()
         {
             var voterEntities = await _voterRepository.GetAllVotersAsync();
@@ -36,6 +39,7 @@ namespace VotingSystem.Api.Controllers
         }
 
         [HttpGet("{userName}")]
+        [AllowAnonymous]
         public async Task<ActionResult<VoterDto>> Get(string userName)
         {
             var voterEntity = await _voterRepository.GetVoterByUserNameAsync(userName);
