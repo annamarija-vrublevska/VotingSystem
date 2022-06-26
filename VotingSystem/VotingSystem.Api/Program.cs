@@ -1,13 +1,23 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 using VotingSystem.Api.DbContexts;
 using VotingSystem.Api.DbSeed;
 using VotingSystem.Api.Entities;
-using VotingSystem.Api.Logic;
+using VotingSystem.Api.Handlers;
+using VotingSystem.Api.Repositories;
+using VotingSystem.Api.Repositories.Interfaces;
 using VotingSystem.Api.Validations;
 
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug()
+    .WriteTo.File("logs/votingsysteminfo.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog();
 
 // Add services to the container.
 
@@ -24,6 +34,12 @@ builder.Services.AddScoped<IVoterRepository, VoterRepository>();
 builder.Services.AddScoped < IValidator<Voter>, VoterEntityValidator>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddAuthentication("BasicAuthentication")
+    .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>
+        ("BasicAuthentication", null);
+
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
@@ -51,6 +67,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
