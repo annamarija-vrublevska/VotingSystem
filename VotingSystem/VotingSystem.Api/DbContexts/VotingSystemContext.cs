@@ -7,6 +7,7 @@ namespace VotingSystem.Api.DbContexts
     {
         public DbSet<Voter> Voters { get; set; }
         public DbSet<Item> Items { get; set; }
+        public DbSet<VoteHistory> VoteHistory { get; set; }
 
         public VotingSystemContext(DbContextOptions<VotingSystemContext> options)
             : base(options)

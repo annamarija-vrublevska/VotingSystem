@@ -38,10 +38,10 @@ namespace VotingSystem.Api.DbSeed
 
             var items = new Item[]
             {
-                new() {Name = "ItemName1", Volume = 0, UserName = "UserName1", ExpireDate = DateTime.Now.AddDays(2)},
+                new() {Name = "ItemName1", Volume = 0, UserName = "UserName1", ExpireDate = DateTime.Now.AddDays(1)},
                 new() {Name = "ItemName2", Volume = 0, UserName = "UserName2", ExpireDate = DateTime.Now.AddDays(2)},
-                new() {Name = "ItemName3", Volume = 0, UserName = "UserName3", ExpireDate = DateTime.Now.AddDays(2)},
-                new() {Name = "ItemName4", Volume = 0, UserName = "UserName4", ExpireDate = DateTime.Now.AddDays(2)}
+                new() {Name = "ItemName3", Volume = 0, UserName = "UserName3", ExpireDate = DateTime.Now.AddDays(3)},
+                new() {Name = "ItemName4", Volume = 0, UserName = "UserName4", ExpireDate = DateTime.Now.AddDays(4)}
             };
 
             foreach (var item in items)
