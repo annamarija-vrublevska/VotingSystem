@@ -6,12 +6,12 @@ For the demo purposes, when the project starts, all the data in the database is 
 
 For project testing, you should be authorized, but to get a voter list request might be anonimous. 
 
-![Voter list](img/VoterList.jpg)
+![Voter list](img/VoterList.PNG)
 
 It is done to get the list of possible users. For basic authorization, a correct user name (voter user name) is enough.
 
-![Basic Auth](img/BasicAuth.jpg)
+![Basic Auth](img/BasicAuth.PNG)
 
 Items have specific data to present backend functionality. There are 3 items with already expired dates, so on all item list requests it is possible to see how states are changing. In the demo project, backend tasks are run multiple times per minute; in real life, it should be done once a day. 
 
-![Item list](img/ItemList.jpg)
+![Item list](img/ItemList.PNG)
